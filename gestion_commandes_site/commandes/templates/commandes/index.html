@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Le site e-comm</h1>
+
+{% for produit in produits %}
+  <h2>{{ produit.nom }}</h2>
+
+
+  {% if produit.images %}
+    <img src="{{ produit.images.url }}" alt="{{ produit.nom }}" style="max-width:300px;">
+  {% endif %}
+  <p>Prix : {{ produit.prix }}</p>
+  <p>Fournisseur : {{ produit.fournisseur }}</p>
+{% empty %}
+  <p>Aucun produit trouvé.</p>
+{% endfor %}
+{% endblock %}

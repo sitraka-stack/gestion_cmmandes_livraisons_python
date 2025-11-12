@@ -13,7 +13,8 @@ class Fournisseur(models.Model):
     
 class Produit(models.Model):
     nom = models.CharField(max_length=100)
-    images = models.ImageField(upload_to='produits/', blank=True, null=True)
+    slug = models.SlugField(max_length=128)
+    images = models.ImageField(upload_to="produits", blank=True, null=True)
     description = models.TextField()
     prix = models.DecimalField(max_digits=10, decimal_places=2)
     fournisseur = models.ForeignKey(Fournisseur, on_delete=models.CASCADE)
