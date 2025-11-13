@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Livraison - Commande #{{ commande.id }}</h1>
+<p><strong>Produit :</strong> {{ commande.produit.nom }} | <strong>Quantité :</strong> {{ commande.quantite }}</p>
+<form method="post">{% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-success">Enregistrer la livraison</button>
+  <a href="{% url 'commandes:commande-detail' commande.pk %}" class="btn btn-secondary">Retour commande</a>
+</form>
+{% endblock %}

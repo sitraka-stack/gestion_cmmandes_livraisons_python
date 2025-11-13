@@ -1,11 +1,18 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 {% block content %}
+<h1>{{ produit.nom }}</h1>
+{% if produit.images %}
+  <img src="{{ produit.images.url }}" alt="{{ produit.nom }}" class="img-fluid mb-3" style="max-width:300px;">
+{% endif %}
+<p>{{ produit.description }}</p>
+<p><strong>Prix :</strong> {{ produit.prix }} €</p>
+<p><strong>Fournisseur :</strong> {{ produit.fournisseur.nom }}</p>
 
-  <h2>{{ produit.nom }}</h2>
-  <p>{{ produit.description }}</p>
-  <p>Prix : {{ produit.prix }}</p>
-  <img src="{{ produit.images.url }}" alt="{{ produit.nom }}" style="max-width:300px;">
+<a class="btn btn-success" href="{% url 'commandes:commander-produit' produit.slug %}">Commander</a>
 
+{% if last_commande %}
+  <a class="btn btn-primary" href="{% url 'commandes:livraison-update' last_commande.pk %}">Gérer la livraison de la commande #{{ last_commande.id }}</a>
+{% endif %}
 
+<a href="{% url 'commandes:index' %}" class="btn btn-secondary">Retour</a>
 {% endblock %}

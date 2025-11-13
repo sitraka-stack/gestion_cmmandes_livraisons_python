@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Suppression fournisseur</h1>
+<p>Voulez-vous vraiment supprimer "{{ fournisseur.nom }}" ? Cette action est irréversible.</p>
+<form method="post">{% csrf_token %}
+  <button class="btn btn-danger">Supprimer</button>
+  <a href="{% url 'commandes:fournisseurs-list' %}" class="btn btn-secondary">Annuler</a>
+</form>
+{% endblock %}

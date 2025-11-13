@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Checkout</h2>
+<p>Total produits : {{ total }} Ar</p>
+<form method="post">{% csrf_token %}
+  <div class="mb-3">
+    <label class="form-label">Adresse</label>
+    <input class="form-control" name="adresse" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Méthode de livraison</label>
+    <select class="form-select" name="methode">
+      <option value="moto">Moto (4000 Ar)</option>
+      <option value="pied">À pied (1000 Ar)</option>
+      <option value="express">Express (7000 Ar)</option>
+    </select>
+  </div>
+  <button class="btn btn-primary" type="submit">Confirmer</button>
+</form>
+{% endblock %}

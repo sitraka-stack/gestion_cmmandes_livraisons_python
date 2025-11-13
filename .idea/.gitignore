@@ -1,0 +1,19 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# JetBrains IDEs (IntelliJ, PyCharm, WebStorm...)
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Exemples courants
+node_modules/
+dist/
+build/
+__pycache__/
+*.log

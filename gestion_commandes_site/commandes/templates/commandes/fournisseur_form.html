@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ action }} fournisseur</h1>
+<form method="post">{% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-success">{{ action }}</button>
+  <a href="{% url 'commandes:fournisseurs-list' %}" class="btn btn-secondary">Annuler</a>
+</form>
+{% endblock %}

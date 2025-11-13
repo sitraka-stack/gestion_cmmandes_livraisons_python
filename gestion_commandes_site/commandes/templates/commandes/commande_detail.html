@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Commande #{{ commande.id }}</h1>
+<p><strong>Produit :</strong> {{ commande.produit.nom }}</p>
+<p><strong>Fournisseur :</strong> {{ commande.produit.fournisseur.nom }}</p>
+<p><strong>Quantité :</strong> {{ commande.quantite }}</p>
+<p><strong>Date :</strong> {{ commande.date_commande }}</p>
+<p><strong>Statut commande :</strong> {{ commande.get_statut_display }}</p>
+
+{% if livraison %}
+  <h3>Livraison</h3>
+  <p><strong>Statut livraison :</strong> {{ livraison.get_statut_display }}</p>
+  <p><strong>Assignée le :</strong> {{ livraison.assigned_at }}</p>
+  <p><strong>Livrée le :</strong> {{ livraison.delivered_at }}</p>
+  <a class="btn btn-primary" href="{% url 'commandes:livraison-update' commande.pk %}">Modifier statut livraison</a>
+{% else %}
+  <p>Aucune livraison associée pour le moment.</p>
+  <a class="btn btn-primary" href="{% url 'commandes:livraison-update' commande.pk %}">Créer / Gérer livraison</a>
+{% endif %}
+
+<a class="btn btn-secondary mt-3" href="{% url 'commandes:commandes-list' %}">Retour aux commandes</a>
+{% endblock %}

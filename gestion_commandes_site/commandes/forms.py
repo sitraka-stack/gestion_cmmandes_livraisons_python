@@ -1,0 +1,26 @@
+from django import forms
+from .models import Fournisseur, Livraison
+
+class FournisseurForm(forms.ModelForm):
+    class Meta:
+        model = Fournisseur
+        fields = ['nom', 'email', 'telephone', 'adresse']
+        widgets = {
+            'adresse': forms.Textarea(attrs={'rows': 3}),
+        }
+
+class CommandeForm(forms.Form):
+    quantite = forms.IntegerField(min_value=1, label="Quantité", widget=forms.NumberInput(attrs={'class': 'form-control'}))
+
+class LivraisonForm(forms.ModelForm):
+    class Meta:
+        model = Livraison
+        fields = ['transport', 'adresse_livraison', 'montant', 'description', 'date_livraison', 'statut']
+        widgets = {
+            'transport': forms.Select(attrs={'class': 'form-control'}),
+            'adresse_livraison': forms.TextInput(attrs={'class': 'form-control'}),
+            'montant': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'date_livraison': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'statut': forms.Select(attrs={'class': 'form-control'}),
+        }

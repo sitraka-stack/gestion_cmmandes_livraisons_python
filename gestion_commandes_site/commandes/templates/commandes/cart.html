@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Panier</h2>
+{% if items %}
+  <table class="table">
+    <thead><tr><th>Produit</th><th>Quantité</th><th>Sous-total</th><th></th></tr></thead>
+    <tbody>
+      {% for it in items %}
+      <tr>
+        <td>{{ it.produit.nom }}</td>
+        <td>{{ it.qty }}</td>
+        <td>{{ it.subtotal }} Ar</td>
+        <td>
+          <a class="btn btn-sm btn-danger" href="{% url 'commandes:remove_from_cart' it.produit.pk %}">Retirer</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p><strong>Total: {{ total }} Ar</strong></p>
+  {% if user.is_authenticated %}
+    <a class="btn btn-success" href="{% url 'commandes:checkout' %}">Passer la commande</a>
+  {% else %}
+    <p>Veuillez <a href="{% url 'commandes:login' %}">vous connecter</a> pour passer la commande.</p>
+  {% endif %}
+{% else %}
+  <p>Votre panier est vide.</p>
+{% endif %}
+{% endblock %}

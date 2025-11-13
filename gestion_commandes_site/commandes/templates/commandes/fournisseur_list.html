@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Fournisseurs</h1>
+<p><a class="btn btn-primary" href="{% url 'commandes:fournisseur-add' %}">Ajouter fournisseur</a></p>
+<table class="table table-sm">
+  <thead><tr><th>Nom</th><th>Téléphone</th><th>Email</th><th>Adresse</th><th></th></tr></thead>
+  <tbody>
+    {% for f in fournisseurs %}
+    <tr>
+      <td>{{ f.nom }}</td>
+      <td>{{ f.telephone }}</td>
+      <td>{{ f.email }}</td>
+      <td>{{ f.adresse|truncatechars:40 }}</td>
+      <td>
+        <a href="{% url 'commandes:fournisseur-edit' f.pk %}">Éditer</a> |
+        <a href="{% url 'commandes:fournisseur-delete' f.pk %}">Supprimer</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">Aucun fournisseur</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Connexion</h2>
+<form method="post">{% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-primary" type="submit">Se connecter</button>
+</form>
+<hr>
+<p>Si vous êtes administrateur, utilisez la page <a href="/admin/">Admin</a> (identifiants staff).</p>
+{% endblock %}

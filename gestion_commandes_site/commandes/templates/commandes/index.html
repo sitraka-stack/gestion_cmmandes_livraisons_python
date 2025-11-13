@@ -1,18 +1,28 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 {% block content %}
-<h1>Le site e-comm</h1>
+<h1>Produits</h1>
+<div class="row">
+  {% for p in produits %}
+  <div class="col-md-4 mb-3">
+    <div class="card">
+      {% if p.images %}
+        <img src="{{ p.images.url }}" class="card-img-top" alt="{{ p.nom }}">
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{ p.nom }}</h5>
+        <p class="card-text">{{ p.description|truncatechars:120 }}</p>
+        <p class="mb-1"><strong>{{ p.prix }} Ar</strong></p>
 
-{% for produit in produits %}
-  <h2>{{ produit.nom }}</h2>
+        <form method="post" action="{% url 'commandes:add_to_cart' p.pk %}">
+          {% csrf_token %}
+          <input type="hidden" name="qty" value="1">
+          <button class="btn btn-sm btn-success" type="submit">Commander</button>
+          <a class="btn btn-sm btn-outline-primary" href="{% url 'commandes:produit-detail' p.slug %}">Détail</a>
+        </form>
 
-
-  {% if produit.images %}
-    <img src="{{ produit.images.url }}" alt="{{ produit.nom }}" style="max-width:300px;">
-  {% endif %}
-  <p>Prix : {{ produit.prix }}</p>
-  <p>Fournisseur : {{ produit.fournisseur }}</p>
-{% empty %}
-  <p>Aucun produit trouvé.</p>
-{% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}
