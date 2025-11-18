@@ -4,21 +4,25 @@
 <div class="row">
   {% for p in produits %}
   <div class="col-md-4 mb-3">
-    <div class="card">
+    <div class="card h-100">
       {% if p.images %}
-        <img src="{{ p.images.url }}" class="card-img-top" alt="{{ p.nom }}">
+        <div class="card-img-top-wrapper">
+          <img src="{{ p.images.url }}" class="card-img-top" alt="{{ p.nom }}">
+        </div>
       {% endif %}
       <div class="card-body">
         <h5 class="card-title">{{ p.nom }}</h5>
         <p class="card-text">{{ p.description|truncatechars:120 }}</p>
         <p class="mb-1"><strong>{{ p.prix }} Ar</strong></p>
 
-        <form method="post" action="{% url 'commandes:add_to_cart' p.pk %}">
-          {% csrf_token %}
-          <input type="hidden" name="qty" value="1">
-          <button class="btn btn-sm btn-success" type="submit">Commander</button>
+        <div class="card-actions">
+          <form method="post" action="{% url 'commandes:add_to_cart' p.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="qty" value="1">
+            <button class="btn btn-sm btn-success" type="submit">Commander</button>
+          </form>
           <a class="btn btn-sm btn-outline-primary" href="{% url 'commandes:produit-detail' p.slug %}">Détail</a>
-        </form>
+        </div>
 
       </div>
     </div>

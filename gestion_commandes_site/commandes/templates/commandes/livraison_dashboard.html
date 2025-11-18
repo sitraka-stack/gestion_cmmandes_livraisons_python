@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Dashboard des Livraisons</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>ID Livraison</th>
+        <th>Méthode</th>
+        <th>Adresse</th>
+        <th>Statut</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for l in livraisons %}
+    <tr>
+        <td>{{ l.id }}</td>
+        <td>{{ l.get_methode_display }}</td>
+        <td>{{ l.adresse }}</td>
+        <td>
+            <span class="badge bg-primary">{{ l.get_statut_display }}</span>
+        </td>
+        <td>
+            <a class="btn btn-warning btn-sm" href="{% url 'modifier_statut_livraison' l.id 'prep' %}">Préparée</a>
+            <a class="btn btn-info btn-sm" href="{% url 'modifier_statut_livraison' l.id 'en_transit' %}">En transit</a>
+            <a class="btn btn-success btn-sm" href="{% url 'modifier_statut_livraison' l.id 'livree' %}">Livrée</a>
+            <a class="btn btn-danger btn-sm" href="{% url 'modifier_statut_livraison' l.id 'retournee' %}">Retournée</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

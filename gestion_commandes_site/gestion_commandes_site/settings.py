@@ -28,7 +28,18 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+# ... (autres imports)
+from decimal import Decimal
+
+# ... (le reste de vos settings)
+
+# Définition centralisée des coûts de transport
+TRANSPORT_COSTS = {
+    'camion': Decimal('12000'),
+    'moto': Decimal('4000'),
+    'velo': Decimal('1500'),
+}
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -55,11 +66,12 @@ ROOT_URLCONF = 'gestion_commandes_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
+        'DIRS': [BASE_DIR.parent / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
+                'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -117,12 +129,29 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
+
+
+
+
+# dossier utilisé pendant le développement pour rechercher les fichiers statiques supplémentaires
+
+
+# dossier cible pour collectstatic (en production)
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = BASE_DIR.parent / "media"
 
 LOGIN_REDIRECT_URL = 'commandes:index'
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

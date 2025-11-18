@@ -1,0 +1,11 @@
+{% extends "base.html" %} {% block content %}
+<h1>Devenir fournisseur</h1>
+<p>
+  Remplis tes coordonnées. Après soumission, un administrateur devra valider ton
+  compte.
+</p>
+<form method="post">
+  {% csrf_token %} {{ form.as_p }}
+  <button class="btn btn-primary">Envoyer</button>
+</form>
+{% endblock %}

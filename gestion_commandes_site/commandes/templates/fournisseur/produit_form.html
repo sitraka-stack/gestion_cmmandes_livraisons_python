@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h1>{% if object %}Éditer le produit{% else %}Ajouter un produit{% endif %}</h1>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <div class="mb-3">
+      {{ form.nom.label_tag }}
+      {{ form.nom }}
+      {{ form.nom.errors }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.slug.label_tag }}
+      {{ form.slug }}
+      {{ form.slug.errors }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.description.label_tag }}
+      {{ form.description }}
+      {{ form.description.errors }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.prix.label_tag }}
+      {{ form.prix }}
+      {{ form.prix.errors }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.quantite_minimale.label_tag }}
+      {{ form.quantite_minimale }}
+      {{ form.quantite_minimale.errors }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.images.label_tag }}
+      {{ form.images }}
+      {{ form.images.errors }}
+    </div>
+
+    <div class="mb-3 form-check">
+      {{ form.is_active }} {{ form.is_active.label_tag }}
+      {{ form.is_active.errors }}
+    </div>
+
+    <button class="btn btn-primary" type="submit">{% if object %}Enregistrer{% else %}Ajouter{% endif %}</button>
+    <a class="btn btn-secondary" href="{% url 'commandes:dashboard' %}">Annuler</a>
+  </form>
+</div>
+{% endblock %}

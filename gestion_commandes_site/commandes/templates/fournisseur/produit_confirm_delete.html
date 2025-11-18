@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h1>Supprimer le produit</h1>
+  <p>Êtes-vous sûr de vouloir supprimer "{{ object.nom }}" ? Cette action est irréversible.</p>
+  <form method="post">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit">Supprimer</button>
+    <a class="btn btn-secondary" href="{% url 'commandes:dashboard' %}">Annuler</a>
+  </form>
+</div>
+{% endblock %}

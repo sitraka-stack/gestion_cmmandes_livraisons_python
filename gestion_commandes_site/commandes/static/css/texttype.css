@@ -1,0 +1,15 @@
+.tt-text {
+  display: inline-block;
+  white-space: pre-wrap;
+}
+
+.tt-cursor {
+  display: inline-block;
+  margin-left: 3px;
+  font-weight: bold;
+}
+
+.tt-cursor-hidden {
+  opacity: 0;
+  transition: opacity 0.3s;
+}

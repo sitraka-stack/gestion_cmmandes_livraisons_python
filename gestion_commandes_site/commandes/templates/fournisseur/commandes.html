@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Commandes me concernant</h1>
+
+<form method="get" class="row g-2 mb-3">
+  <div class="col-auto">
+    <select class="form-select" name="statut">
+      <option value="">Tous statuts</option>
+      {% for val,label in statut_choices %}
+        <option value="{{ val }}" {% if filter_statut == val %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-auto">
+    <input type="date" class="form-control" name="start" value="{{ filter_start }}" />
+  </div>
+  <div class="col-auto">
+    <input type="date" class="form-control" name="end" value="{{ filter_end }}" />
+  </div>
+  <div class="col-auto">
+    <button class="btn btn-primary" type="submit">Filtrer</button>
+  </div>
+</form>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Date</th>
+      <th>Produits (mes articles)</th>
+      <th>Quantités</th>
+      <th>Statut</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  {# Ici `commandes` est une liste d'objets dict: {'commande': Commande, 'lignes': [ {'produit':Produit, 'quantite':int}, ... ] } #}
+  {% for data in commandes %}
+    {% with c=data.commande %}
+    <tr>
+      <td>{{ c.id }}</td>
+      <td>{{ c.date_commande|date:"SHORT_DATETIME_FORMAT" }}</td>
+
+      <td>
+        {% for ligne in data.lignes %}
+          {{ ligne.produit.nom }}<br>
+        {% empty %}
+          <em>Aucun produit (pour ce fournisseur)</em>
+        {% endfor %}
+      </td>
+
+      <td>
+        {% for ligne in data.lignes %}
+          {{ ligne.quantite }}<br>
+        {% endfor %}
+      </td>
+
+      <td>{{ c.get_statut_display }}</td>
+
+      <td>
+        <div class="d-flex flex-column">
+          <form method="post" action="{% url 'commandes:marquer_prete' c.pk %}">
+            {% csrf_token %}
+            <button class="btn btn-sm btn-outline-success mb-1" type="submit">Marquer préparée</button>
+          </form>
+
+          <a class="btn btn-sm btn-outline-primary" href="{% url 'commandes:commande-detail' c.pk %}">Voir commande</a>
+          {% if c.livraison %}
+            <a class="btn btn-sm btn-outline-secondary mt-1" href="{% url 'commandes:livraison-update' c.pk %}">Voir livraison</a>
+          {% endif %}
+        </div>
+      </td>
+    </tr>
+    {% endwith %}
+  {% empty %}
+    <tr><td colspan="6">Aucune commande.</td></tr>
+  {% endfor %}
+  <a class="btn btn-secondary" href="{% url 'commandes:dashboard' %}">Retour au tableau de bord</a>
+  </tbody>
+</table>
+{% endblock %}

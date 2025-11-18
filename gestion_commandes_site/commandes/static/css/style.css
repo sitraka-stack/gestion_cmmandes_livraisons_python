@@ -1,0 +1,55 @@
+/* static/css/produits.css
+   Images non coupées, même taille de boîte, cartes mêmes hauteurs.
+*/
+
+/* boîte fixe pour l'image — même taille pour toutes les cards */
+.card-img-top-wrapper {
+  height: 220px;                 /* ajuster si vous voulez plus/moins */
+  display: flex;
+  align-items: center;
+  justify-content: center;       /* centre l'image dans la boîte */
+  background-color: #f6f6f6;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+
+/* l'image garde son ratio, s'ajuste dans la boîte sans être coupée */
+.card-img-top-wrapper img,
+.card .card-img-top {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;           /* important : pas de crop */
+  display: block;
+}
+
+/* rendre la card pleine hauteur pour aligner toutes les cards */
+.card.h-100 {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* permettre au corps de la card de pousser les boutons vers le bas */
+.card .card-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* zone actions/btns : collée en bas de la card-body */
+.card .card-actions {
+  margin-top: auto;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* responsive : ajuster la hauteur de la boîte image */
+@media (min-width: 992px) {
+  .card-img-top-wrapper { height: 240px; }
+}
+@media (max-width: 575.98px) {
+  .card-img-top-wrapper { height: 180px; }
+}

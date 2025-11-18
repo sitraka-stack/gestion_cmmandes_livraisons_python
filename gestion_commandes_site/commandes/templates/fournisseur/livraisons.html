@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h1>Mes livraisons</h1>
+
+  <form method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+      <select class="form-select" name="statut">
+        <option value="">Tous statuts</option>
+        <option value="prep" {% if request.GET.statut == 'prep' %}selected{% endif %}>Préparée</option>
+        <option value="en_transit" {% if request.GET.statut == 'en_transit' %}selected{% endif %}>En transit</option>
+        <option value="livree" {% if request.GET.statut == 'livree' %}selected{% endif %}>Livrée</option>
+        <option value="retournee" {% if request.GET.statut == 'retournee' %}selected{% endif %}>Retournée</option>
+      </select>
+    </div>
+    <div class="col-auto">
+      <input type="date" class="form-control" name="start" value="{{ request.GET.start }}" />
+    </div>
+    <div class="col-auto">
+      <input type="date" class="form-control" name="end" value="{{ request.GET.end }}" />
+    </div>
+    <div class="col-auto">
+      <button class="btn btn-primary" type="submit">Filtrer</button>
+    </div>
+  </form>
+
+  {% if livraisons %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID commande</th>
+          <th>Adresse</th>
+          <th>Transport</th>
+          <th>Montant</th>
+          <th>Statut</th>
+          <th>Date prévue</th>
+          <th>Date effective</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for liv in livraisons %}
+        <tr>
+          <td>{{ liv.commande.id }}</td>
+          <td>{{ liv.adresse_livraison }}</td>
+          <td>{{ liv.get_transport_display }}</td>
+          <td>{{ liv.montant }}</td>
+          <td>{{ liv.get_statut_display }}</td>
+          <td>{% if liv.date_prevue %}{{ liv.date_prevue|date:"SHORT_DATETIME_FORMAT" }}{% endif %}</td>
+          <td>{% if liv.date_effective %}{{ liv.date_effective|date:"SHORT_DATETIME_FORMAT" }}{% endif %}</td>
+          <td>
+            <a class="btn btn-sm btn-primary" href="{% url 'commandes:commande-detail' liv.commande.pk %}">Voir commande</a>
+            <a class="btn btn-sm btn-secondary" href="{% url 'commandes:livraison-update' liv.commande.pk %}">Modifier</a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>Aucune livraison pour le moment.</p>
+  {% endif %}
+
+  <a class="btn btn-secondary" href="{% url 'commandes:dashboard' %}">Retour au tableau de bord</a>
+</div>
+{% endblock %}

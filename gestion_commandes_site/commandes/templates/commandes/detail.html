@@ -7,7 +7,9 @@
 <p>{{ produit.description }}</p>
 <p><strong>Prix :</strong> {{ produit.prix }} €</p>
 <p><strong>Fournisseur :</strong> {{ produit.fournisseur.nom }}</p>
-
+<p><strong>Telephone :</strong> {{ produit.fournisseur.telephone }}</p>
+<p><strong>Mail :</strong> {{ produit.fournisseur.email }}</p>
+<p><strong>Adresse :</strong> {{ produit.fournisseur.adresse }}</p>
 <a class="btn btn-success" href="{% url 'commandes:commander-produit' produit.slug %}">Commander</a>
 
 {% if last_commande %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Ventes</h1>
+<p>Voici le récapitulatif de vos ventes d'articles commandés.</p>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Produit</th>
+      <th>Quantité totale vendue</th>
+      <th>Montant total</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for vente in ventes %}
+    <tr>
+      <td>{{ vente.produit__nom }}</td>
+      <td>{{ vente.total_qte }}</td>
+      <td>{{ vente.total_montant }} Ar</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">Aucune vente pour le moment.</td></tr>
+    {% endfor %}
+    <a class="btn btn-secondary" href="{% url 'commandes:dashboard' %}">Retour au tableau de bord</a>
+  </tbody>
+</table>
+{% endblock %}

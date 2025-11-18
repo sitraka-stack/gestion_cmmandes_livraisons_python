@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4 text-center">
+  <h1>Commande réussie</h1>
+  <p class="lead">Merci ! Votre commande a bien été enregistrée.</p>
+
+  {% if items %}
+    <h4>Récapitulatif des articles</h4>
+    <ul class="list-group mb-3">
+      {% for it in items %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ it.produit.nom }}</strong><br>
+            Quantité : {{ it.qty }}
+          </div>
+          <span>{{ it.subtotal }} Ar</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if total %}
+    <p><strong>Montant total :</strong> {{ total }} Ar</p>
+  {% endif %}
+
+  <a class="btn btn-primary" href="{% url 'commandes:index' %}">Retour à l'accueil</a>
+  <a class="btn btn-outline-secondary" href="{% url 'commandes:commandes-list' %}">Voir mes commandes</a>
+</div>
+{% endblock %}
